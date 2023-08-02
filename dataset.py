@@ -4,7 +4,7 @@ import librosa.feature
 import math
 import json
 
-DATASET_PATH = "/Users/johnslee/PycharmProjects/pythonProject/genres"
+DATASET_PATH = "/Users/johnslee/PycharmProjects/MusicAnalysis/genres"
 JSON_PATH = "data.json"
 SAMPLE_RATE = 22050
 DURATION = 30
