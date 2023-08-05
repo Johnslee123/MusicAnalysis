@@ -52,13 +52,13 @@ def main():
     client_id = '9fc9ef50f56f42499f85cb66b6c8c3a0'
     client_secret = 'df8d7b7026c84e6db2afab4422f9259d'
 
-    playlist_id = 'https://open.spotify.com/playlist/1yzX8r6rEYE6f1s2vdD20V?si=7bcfd96344494efe'
+    playlist_id = 'https://open.spotify.com/playlist/7ldp9yPrXzrRpcen0xdDZZ?si=0cd0b8be2c084714'
 
     track_previews = get_track_previews(playlist_id, client_id, client_secret)
 
-    save_folder = "All KPop"
+    save_folder = "All KPop/sad songs"
 
-    for track_id, track_info in track_previews.items():
+    for track_info in track_previews.items():
         if track_info['preview_url']:
             print(f"Downloading 30-second preview for {track_info['track_name']} by {track_info['artist_name']}")
             download_track_preview(track_info['preview_url'], track_info['track_name'], track_info['artist_name'], save_folder)
