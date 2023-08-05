@@ -4,17 +4,19 @@ import requests
 import os
 
 
-def download_track_preview(preview_url, track_name, artist_name):
+def download_track_preview(preview_url, track_name, artist_name, save_folder):
     response = requests.get(preview_url)
     if response.status_code == 200:
 
         file_name = f"{artist_name}_{track_name}.wav".replace(" ", "_").replace("/", "_")
+        file_path = os.path.join(save_folder, file_name)
 
-        with open(file_name, "wb") as f:
+        with open(file_path, "wb") as f:
             f.write(response.content)
-        print(f"Downloaded {track_name} by {artist_name} to {file_name}")
+        print(f"Downloaded {track_name} by {artist_name} to {file_path}")
     else:
         print(f"Failed to download {track_name} by {artist_name}")
+
 
 
 def get_track_previews(playlist_id, client_id, client_secret):
@@ -54,13 +56,14 @@ def main():
 
     track_previews = get_track_previews(playlist_id, client_id, client_secret)
 
+    save_folder = "All KPop/sad songs"
+
     for track_id, track_info in track_previews.items():
         if track_info['preview_url']:
             print(f"Downloading 30-second preview for {track_info['track_name']} by {track_info['artist_name']}")
-            download_track_preview(track_info['preview_url'], track_info['track_name'], track_info['artist_name'])
+            download_track_preview(track_info['preview_url'], track_info['track_name'], track_info['artist_name'], save_folder)
         else:
             print(f"No 30-second preview available for {track_info['track_name']} by {track_info['artist_name']}")
-
 
 if __name__ == '__main__':
     main()
