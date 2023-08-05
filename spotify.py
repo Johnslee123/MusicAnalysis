@@ -52,11 +52,11 @@ def main():
     client_id = '9fc9ef50f56f42499f85cb66b6c8c3a0'
     client_secret = 'df8d7b7026c84e6db2afab4422f9259d'
 
-    playlist_id = 'https://open.spotify.com/playlist/41VqifSaZrrSDAB0x7lhH5?si=810623d559d94b00'
+    playlist_id = 'https://open.spotify.com/playlist/1yzX8r6rEYE6f1s2vdD20V?si=7bcfd96344494efe'
 
     track_previews = get_track_previews(playlist_id, client_id, client_secret)
 
-    save_folder = "All KPop/sad songs"
+    save_folder = "All KPop"
 
     for track_id, track_info in track_previews.items():
         if track_info['preview_url']:

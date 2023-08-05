@@ -9,8 +9,10 @@ from tensorflow.keras.layers import (
 )
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from sklearn.preprocessing import StandardScaler
 
-DATA_PATH = "data.json"
+
+DATA_PATH = "kpopdata.json"
 
 
 def load_data(data_path):
@@ -57,27 +59,18 @@ def plot_history(history):
 
 
 def prepare_datasets(test_size, validation_size):
-    """Loads data and splits it into train, validation and test sets.
-
-    :param test_size (float): Value in [0, 1] indicating percentage of data set to allocate to test split
-    :param validation_size (float): Value in [0, 1] indicating percentage of train set to allocate to validation split
-
-    :return X_train (ndarray): Input training set
-    :return X_validation (ndarray): Input validation set
-    :return X_test (ndarray): Input test set
-    :return y_train (ndarray): Target training set
-    :return y_validation (ndarray): Target validation set
-    :return y_test (ndarray): Target test set
-    """
-
-    # load data
     X, y = load_data(DATA_PATH)
 
-    # create train, validation and test split
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size)
-    X_train, X_validation, y_train, y_validation = train_test_split(X_train, y_train, test_size=validation_size)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
+    X_train, X_validation, y_train, y_validation = train_test_split(X_train, y_train, test_size=validation_size, random_state=42)
 
-    # add an axis to input sets
+    # Standardize across the MFCC dimensions for each time step
+    scaler = StandardScaler()
+
+    X_train = np.array([scaler.fit_transform(x) for x in X_train])
+    X_validation = np.array([scaler.transform(x) for x in X_validation])
+    X_test = np.array([scaler.transform(x) for x in X_test])
+
     X_train = X_train[..., np.newaxis]
     X_validation = X_validation[..., np.newaxis]
     X_test = X_test[..., np.newaxis]
@@ -161,21 +154,16 @@ def predict(model, X, y):
 
 
 if __name__ == "__main__":
-    # Load and prepare data
     X_train, X_validation, X_test, y_train, y_validation, y_test = prepare_datasets(0.25, 0.2)
 
-    # Build and train model
     input_shape = (X_train.shape[1], X_train.shape[2], 1)
     num_classes = len(np.unique(y_train))
     model, history = train_model(X_train, y_train, X_validation, y_validation, input_shape, num_classes, epochs=50)
 
-    # Save the trained model
     model.save('saved_model.h5')
 
-    # Plot accuracy/error for training and validation
     plot_history(history)
 
-    # Evaluate model on test set
     test_loss, test_acc = model.evaluate(X_test, y_test, verbose=2)
     print('\nTest accuracy:', test_acc)
 

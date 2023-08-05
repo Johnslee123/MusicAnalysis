@@ -4,8 +4,8 @@ import librosa.feature
 import math
 import json
 
-DATASET_PATH = "/Users/johnslee/PycharmProjects/MusicAnalysis/genres"
-JSON_PATH = "data.json"
+DATASET_PATH = "/Users/johnslee/PycharmProjects/MusicAnalysis/all Kpop"
+JSON_PATH = "kpopdata.json"
 SAMPLE_RATE = 22050
 DURATION = 30
 SAMPLES_PER_TRACK = SAMPLE_RATE * DURATION

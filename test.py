@@ -13,7 +13,7 @@ def extract_mfcc(y, sr, num_mfcc=13, n_fft=2048, hop_length=512):
 
 
 # Load and preprocess the audio data
-audio, sr = librosa.load('classicaltest.wav')
+audio, sr = librosa.load('NewJeans_Hurt.wav')
 mfccs = extract_mfcc(y=audio, sr=sr, num_mfcc=13, n_fft=2048, hop_length=512)
 
 # Transpose the MFCCs array to match the shape expected by the model
@@ -33,7 +33,7 @@ mfccs = mfccs.reshape(1, mfccs.shape[0], mfccs.shape[1], 1)
 predicted_probs = model.predict(mfccs)
 predicted_class = np.argmax(predicted_probs)
 
-class_names = ['pop', 'metal', 'disco', 'blues', 'reggae', 'classical', 'rock', 'hiphop', 'country', 'jazz']
+class_names = ['happy songs', 'sad songs']
 
 print(f"Predicted class: {class_names[predicted_class]}")
 print(f"Predicted probabilities: {predicted_probs[0]}")
