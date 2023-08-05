@@ -64,7 +64,6 @@ def prepare_datasets(test_size, validation_size):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
     X_train, X_validation, y_train, y_validation = train_test_split(X_train, y_train, test_size=validation_size, random_state=42)
 
-    # Reshape the MFCC data for the StandardScaler
     num_time_steps, num_mfcc = X_train.shape[1], X_train.shape[2]
     X_train = X_train.reshape(-1, num_time_steps * num_mfcc)
     X_validation = X_validation.reshape(-1, num_time_steps * num_mfcc)
@@ -126,7 +125,7 @@ def train_model(X_train, y_train, X_validation, y_validation, input_shape, num_c
         validation_data=(X_validation, y_validation)
     )
 
-    # Train the model without augmentation for a few more epochs
+    # Train the model without augmentation
     history = model.fit(
         X_train, y_train,
         validation_data=(X_validation, y_validation),
@@ -145,10 +144,8 @@ def predict(model, X, y):
     :param y (int): Target
     """
 
-    # add a dimension to input data for sample - model.predict() expects a 4d array in this case
-    X = X[np.newaxis, ...]  # array shape (1, 130, 13, 1)
+    X = X[np.newaxis, ...]  
 
-    # perform prediction
     prediction = model.predict(X)
 
     # get index with max value
@@ -171,10 +168,9 @@ if __name__ == "__main__":
     test_loss, test_acc = model.evaluate(X_test, y_test, verbose=2)
     print('\nTest accuracy:', test_acc)
 
-    # Pick a sample to predict from the test set
+
     sample_idx = 100
     X_to_predict = X_test[sample_idx]
     y_to_predict = y_test[sample_idx]
 
-    # Predict sample
     predict(model, X_to_predict, y_to_predict)
