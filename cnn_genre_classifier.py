@@ -11,7 +11,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from sklearn.preprocessing import StandardScaler
 
-
+#  DATA_SET_PATH
 DATA_PATH = "kpopdata.json"
 
 
