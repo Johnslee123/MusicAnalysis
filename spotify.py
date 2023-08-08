@@ -18,7 +18,6 @@ def download_track_preview(preview_url, track_name, artist_name, save_folder):
         print(f"Failed to download {track_name} by {artist_name}")
 
 
-
 def get_track_previews(playlist_id, client_id, client_secret):
     sp = spotipy.Spotify(
         client_credentials_manager=SpotifyClientCredentials(client_id=client_id, client_secret=client_secret))
@@ -52,18 +51,20 @@ def main():
     client_id = '9fc9ef50f56f42499f85cb66b6c8c3a0'
     client_secret = 'df8d7b7026c84e6db2afab4422f9259d'
 
-    playlist_id = 'https://open.spotify.com/playlist/7ldp9yPrXzrRpcen0xdDZZ?si=0cd0b8be2c084714'
+    playlist_id = 'https://open.spotify.com/playlist/1yzX8r6rEYE6f1s2vdD20V?si=a04465131d954987'
 
     track_previews = get_track_previews(playlist_id, client_id, client_secret)
 
-    save_folder = "All KPop/sad songs"
+    save_folder = "All KPop"
 
-    for track_info in track_previews.items():
+    for track_info in track_previews.values():
         if track_info['preview_url']:
             print(f"Downloading 30-second preview for {track_info['track_name']} by {track_info['artist_name']}")
-            download_track_preview(track_info['preview_url'], track_info['track_name'], track_info['artist_name'], save_folder)
+            download_track_preview(track_info['preview_url'], track_info['track_name'], track_info['artist_name'],
+                                   save_folder)
         else:
             print(f"No 30-second preview available for {track_info['track_name']} by {track_info['artist_name']}")
+
 
 if __name__ == '__main__':
     main()
