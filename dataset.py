@@ -46,6 +46,7 @@ def save_mfcc(dataset_path, json_path, label, num_segments=10, n_mfcc=13, n_fft=
 
     playlist_tracks = sp.playlist_tracks(dataset_path)
 
+
     playlist_label = label
     data["mapping"] = {0: {"semantic_label": "happy"}, 1: {"semantic_label": "sad"}}
 
@@ -62,6 +63,7 @@ def save_mfcc(dataset_path, json_path, label, num_segments=10, n_mfcc=13, n_fft=
             if audio_file is not None:
                 signal, sr = librosa.load(audio_file, sr=SAMPLE_RATE)
                 os.remove(audio_file)  # Delete the temporary audio file
+
 
                 # Get audio features using the track ID
                 audio_features = sp.audio_features(track_id)
