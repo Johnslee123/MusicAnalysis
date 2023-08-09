@@ -98,7 +98,6 @@ def save_mfcc(dataset_path, json_path, num_segments=10, n_mfcc=13, n_fft=2048, h
 
 DATA_PATH = "test.json"
 
-
 def load_data(data_path, max_sequence_length):
     """Loads training dataset from json file.
 
@@ -167,16 +166,20 @@ if __name__ == "__main__":
     client_id = '9fc9ef50f56f42499f85cb66b6c8c3a0'
     client_secret = 'df8d7b7026c84e6db2afab4422f9259d'
 
+    playlist_link = "https://open.spotify.com/playlist/1yzX8r6rEYE6f1s2vdD20V?si=c45bf6042619477b"
+
+    save_mfcc(playlist_link, JSON_PATH_MERGED)
+    X_playlist = load_data(JSON_PATH_MERGED, max_sequence_length)
+
     # Load your trained model (replace 'model.h5' with the actual path to your model)
     model = keras.models.load_model('model.h5')
 
     X_test = prepare_datasets(max_sequence_length)
 
-    playlist_link = "https://open.spotify.com/playlist/1yzX8r6rEYE6f1s2vdD20V?si=c45bf6042619477b"
+    
 
     # Save song data and load the data for the playlist
-    save_mfcc(playlist_link, JSON_PATH_MERGED)
-    X_playlist = load_data(JSON_PATH_MERGED, max_sequence_length)
+   
 
     print("Number of songs in the playlist:", len(X_playlist))
 
@@ -186,3 +189,4 @@ if __name__ == "__main__":
         X_to_predict = X_test[sample_idx]
         print(f"Predicting song {sample_idx + 1}: {song_name} by {artist_name}")
         predict(model, X_to_predict)
+
