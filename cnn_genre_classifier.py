@@ -6,6 +6,9 @@ import tensorflow.keras as keras
 from tensorflow.keras.layers import Dense, Dropout, LeakyReLU
 from tensorflow.keras.optimizers import Adam
 from sklearn.preprocessing import StandardScaler
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
+
 
 # DATA_SET_PATH
 DATA_PATH = "kpopdata.json"
@@ -131,9 +134,6 @@ def train_model(X_train, y_train, X_validation, y_validation, input_shape, num_c
     return model, history
 
 
-
-
-
 def predict(model, X, y):
     """Predict a single sample using the trained model
 
@@ -141,6 +141,8 @@ def predict(model, X, y):
     :param X: Input data
     :param y (int): Target
     """
+
+    print("Input shape before reshaping:", X.shape)
 
     # perform prediction
     prediction = model.predict(X.reshape(1, -1))
@@ -165,10 +167,11 @@ if __name__ == "__main__":
     test_loss, test_acc = model.evaluate(X_test, y_test, verbose=2)
     print('\nTest accuracy:', test_acc)
 
-    # Pick a sample to predict from the test set
-    sample_idx = 100
-    X_to_predict = X_test[sample_idx]
-    y_to_predict = y_test[sample_idx]
+    # Predict multiple samples from the test set
+    num_samples_to_predict = 10  # Number of samples to predict
+    for sample_idx in range(num_samples_to_predict):
+        X_to_predict = X_test[sample_idx]
+        y_to_predict = y_test[sample_idx]
 
-    # Predict sample
-    predict(model, X_to_predict, y_to_predict)
+        # Predict sample
+        predict(model, X_to_predict, y_to_predict)
