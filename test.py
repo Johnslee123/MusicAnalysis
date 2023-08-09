@@ -144,9 +144,6 @@ def predict(model, X):
     :param X: Input data
     """
 
-    # Print the shape of the input data
-    print("Input shape:", X.shape)
-
     # Perform prediction
     prediction = model.predict(X.reshape(1, -1))
 

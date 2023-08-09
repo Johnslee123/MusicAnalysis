@@ -142,8 +142,6 @@ def predict(model, X, y):
     :param y (int): Target
     """
 
-    print("Input shape before reshaping:", X.shape)
-
     # perform prediction
     prediction = model.predict(X.reshape(1, -1))
 
@@ -168,10 +166,10 @@ if __name__ == "__main__":
     print('\nTest accuracy:', test_acc)
 
     # Predict multiple samples from the test set
-    num_samples_to_predict = 10  # Number of samples to predict
-    for sample_idx in range(num_samples_to_predict):
-        X_to_predict = X_test[sample_idx]
-        y_to_predict = y_test[sample_idx]
+    sample_idx = 100
+    X_to_predict = X_test[sample_idx]
+    y_to_predict = y_test[sample_idx]
 
-        # Predict sample
-        predict(model, X_to_predict, y_to_predict)
+    # Predict sample
+    predict(model, X_to_predict, y_to_predict)
+
