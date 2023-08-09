@@ -18,6 +18,9 @@ SAMPLES_PER_TRACK = SAMPLE_RATE * DURATION
 
 
 # testing for push
+song_artist_names = []  # List to store song names and artist names
+
+
 
 def download_track_preview(preview_url, track_name, artist_name, save_folder):
     response = requests.get(preview_url)
@@ -26,6 +29,7 @@ def download_track_preview(preview_url, track_name, artist_name, save_folder):
         file_path = os.path.join(save_folder, file_name)
         with open(file_path, "wb") as f:
             f.write(response.content)
+        song_artist_names.append((track_name, artist_name))
         print(f"Downloaded {track_name} by {artist_name} to {file_path}")
         return file_path
     else:
@@ -147,12 +151,15 @@ def predict(model, X):
     # Perform prediction
     prediction = model.predict(X.reshape(1, -1))
 
-    # Print the predicted probabilities
-    print("Predicted probabilities:", prediction)
-
     # Get the predicted label
     predicted_label = np.argmax(prediction, axis=1)
-    print("Predicted label:", predicted_label)
+
+    # Map the predicted label to emotions
+    emotion = "happy" if predicted_label == 0 else "sad"
+
+    # Print the predicted probabilities and emotion
+    print("Predicted probabilities:", prediction)
+    print("Predicted emotion:", emotion)
 
 
 if __name__ == "__main__":
@@ -165,7 +172,7 @@ if __name__ == "__main__":
 
     X_test = prepare_datasets(max_sequence_length)
 
-    playlist_link = "https://open.spotify.com/playlist/1yzX8r6rEYE6f1s2vdD20V?si=68ce6d6dcf7c4eb5"
+    playlist_link = "https://open.spotify.com/playlist/1yzX8r6rEYE6f1s2vdD20V?si=c45bf6042619477b"
 
     # Save song data and load the data for the playlist
     save_mfcc(playlist_link, JSON_PATH_MERGED)
@@ -175,7 +182,7 @@ if __name__ == "__main__":
 
     num_samples_to_predict = len(X_test)  # Predict for all test samples
 
-    for sample_idx in range(num_samples_to_predict):
+    for sample_idx, (song_name, artist_name) in enumerate(song_artist_names):
         X_to_predict = X_test[sample_idx]
-        print(f"Predicting song {sample_idx + 1}")
+        print(f"Predicting song {sample_idx + 1}: {song_name} by {artist_name}")
         predict(model, X_to_predict)
