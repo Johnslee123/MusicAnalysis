@@ -12,7 +12,7 @@ Our model was initially based on Valerio Velardo's Deep Learning (for audio) tut
 
 ### Iteration 1: Data Collection and Preprocessing
 
-In the first iteration, we focused on using two playlists (one happy, one sad) to see if we could make it distinguish between happy and sad songs. One challenge we ran into initially was having a very high accuracy on the training data with very poor actual test results. To make a more precise model, we increased the parameters for songs from just MFCC to include energy, tempo, etc.
+In the first iteration, we focused on using two playlists (one happy, one sad) to see if we could make it distinguish between happy and sad songs using the MFCC data that we received from the songs. One challenge we ran into initially was having a very high accuracy on the training data with very poor actual test results. Doing more research and creating visualized training/test graphs to figure out the issue, we identified hte issue to be overfitting. After improving upon the model by adding Dropout layers and optimizations, we were able to get the model to have about a 62% accuracy rate. To make a more precise model, we decided to increase the parameters for songs from just MFCC to include energy, tempo, etc. using Spotify provided data.
 
 ### Iteration 2: Further Data Collection
 
@@ -20,7 +20,7 @@ In this step, we focused on understanding the model in order to have it factor i
 
 ### Iteration 3: Successful Happy/Sad Model
 
-After various failed attempts, a successful test was made, allowing for us to check the accuracy of the model with real samples. As expected, the accuracy of the model in determining happy and songs was much higher, now that it was also accounting for 5 other factors that indicate the tone of a song. The only small bug was a misordering of the functions, wherein the comparison of the test playlist and the model occurred before the JSON file was created. Going forward, we are hoping to expand on the functionality of the model.
+After various failed attempts, a successful test was made, allowing for us to check the accuracy of the model with real samples. As expected, the accuracy of the model in determining happy and songs was much higher improving to a rate of 94. Now that it was also accounting for 5 other factors that indicate the tone of a song, the model was working much better. The only small bug was a misordering of the functions, wherein the comparison of the test playlist and the model occurred before the JSON file was created. Going forward, we are hoping to expand on the functionality of the model.
 
 ## Challenges Faced
 
