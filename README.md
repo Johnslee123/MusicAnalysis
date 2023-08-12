@@ -20,7 +20,7 @@ In this step, we focused on understanding the model in order to have it factor i
 
 ### Iteration 3: Successful Happy/Sad Model
 
-After various failed attempts, a successful test was made, allowing for us to check the accuracy of the model with real samples. As expected, the accuracy of the model in determining happy and songs was much higher improving to a rate of 94%. Now that it was also accounting for 5 other factors that indicate the tone of a song, the model was working much better. The only small bug was a misordering of the functions, wherein the comparison of the test playlist and the model occurred before the JSON file was created. Going forward, we are hoping to expand on the functionality of the model.
+After various failed attempts, a successful test was made, allowing for us to check the accuracy of the model with real samples. As expected, the accuracy of the model in determining happy and songs was much higher improving to a rate of 90%. Now that it was also accounting for 5 other factors that indicate the tone of a song, the model was working much better. The only small bug was a misordering of the functions, wherein the comparison of the test playlist and the model occurred before the JSON file was created. Going forward, we are hoping to expand on the functionality of the model.
 
 ## Challenges Faced
 
